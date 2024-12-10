@@ -77,7 +77,7 @@
 \section{Introduction}
 Tom Clancy's Rainbow Six Siege is an online multiplayer, 5v5 videogame developed and published by Ubisoft.
 The game has seen years of support having been published in December 2015 and still receiving updates, with the most recent major update being released this month, December 2024.
-Over its nine years of support, the community has enjoyed many content releases and data analyses.
+Over its nine years, the community has enjoyed many content releases and data analyses.
 In the game's second year, during the season titled ``Operation: Velvet Shell'', Ubisoft released some of its more in-depth player-collected data for community consumption, giving a previously unknown glimpse into how players played in the Ranked playlist.
 While there hasn't been a second such release of data in the seven years since, it is still an interesting source to view how play was like.
 
@@ -85,9 +85,9 @@ For some additional background, Rainbow Six Siege, or just Siege, has its gamepl
 The gamemodes available in the Ranked playlist back in Velvet Shell were bomb, secure area, and hostage.
 The possible maps in play numbered in at 16.
 Together, each map in each gamemode featured a number of objectives that could be selected by one team to defend and have the other attack.
-These two sides, Defenders and Attackers, had their own distinctive operators, in-game characters with unique special abilities.
-All together, these allow players to synthesise strategies to achieve kills and round and match wins.
-Given enough wins and losses, players are given one of seven ranks, as of Velvet Shell.
+These two sides, Defenders and Attackers, have their own distinctive operators, in-game characters with unique special abilities.
+All together, these allow players to synthesise strategies to get kills and achieve round and match wins.
+Given enough wins and losses, players are given, as of Velvet Shell, one of seven ranks.
 
 The project source code can be found in this GitHub repository:
 \url{https://github.com/Magnetize8953/ml-analysis-of-siege}
@@ -98,9 +98,9 @@ The project source code can be found in this GitHub repository:
 The datasets that were released by Ubisoft in this season consisted of player loadout selections, player objective and operator selections, and round-by-round performance records.
 The files ranged from 40 megabytes to nearly 20 gigabytes.
 Due to size and computational limits, the medium-sized dataset was chosen, the player objective and operator selections.
-This dataset came in at 804 megabytes and over 8,700,000 data samples.
+This dataset came in at 804 megabytes and over 8,700,000 data samples and 12 features.
 
-The dataset features all the informationed in the game background for a given day over the course of about a week.
+The dataset includes all the information explained in the game background for a given day over the course of about a week.
 What is important to note is that a sample is equivalent to one day of a given combination.
 For example, one sample could be of Bronze PC players playing the Fuze attacking operator on Chalet on the hostage gamemode's library objective.
 For the sake of brevity, the word ``player'' will be used in reference to a data sample, but know that the sample includes more than just the player.
@@ -109,7 +109,7 @@ For the sake of brevity, the word ``player'' will be used in reference to a data
 
 \subsection{Data Analysis}
 An initial visual analysis of the numerical data finds a positive correlation between each point with one another.
-It is also clear that their is a clustering of samples regardless of player rank in the bottom left corner.
+It is also clear that there is a clustering of samples regardless of player rank in the bottom left corner.
 This would make sense, especially given the scales, that most players and combinations perform in the lower tier.
 An interesting observation is that the outstanding players, those reaching the upper right of the graphs, are all of the Gold rank.
 This rank is the typical, middle-of-the-pack player, the players who are capable, but not exceptional.
@@ -170,8 +170,8 @@ This is an interesting observation as the second-place gamemode, bomb, is usuall
 \newpage
 
 \subsection{Data Preprocessing}
-The data was preprocessed twice: once before being added to the project and once within the project.
-The pre-project addition preprocessing was a necessary step to make the data compatible with the libraries used.
+The data was preprocessed in two stages: prior to being added to the project and within the project.
+The additional step of pre-project preprocessing was necessary to make the data compatible with the libraries used.
 In its initial state, each data sample within the set included a non-standard hyphen character.
 This character caused issues when being read by Pandas, and thus rendered the data unusable without modification.
 The following command was run to clean up the data:
@@ -184,15 +184,16 @@ The following command was run to clean up the data:
 Once made possible to read, the data was entered into a Pandas DataFrame.
 Only a small sample of 0.16\% of the dataset was actually saved, though, due to computational limits.
 This turned out to be about 14,000 data samples across 12 features.
-This was soon reduced and then increased though.
+This was soon reduced and then increased.
 
 One of those features was the date in which the data was collected.
-As mentioned before, each sample corresponded to a collection of data for a given day, this meant some collections would match exactly, except for the days.
+As mentioned before, each sample corresponded to a collection of data for a given day.
+This meant some collections would match exactly, except for the days.
 To get around this unnecessary data, the column was dropped and then the numerical data was aggregated together based on shared features.
-These reduced the number of samples by about 800 to 13,200.
+This reduced the number of samples by about 800 to 13,200.
 This was not enough though.
 
-As the data included categories, written word, it was not immediately possible to pass through to machine learning libraries.
+As the data included categories in the form of written word, it was not immediately possible to pass through to machine learning libraries.
 These strings had to be encoded.
 One-hot encoding was chosen for its effectiveness, intuitiveness, and ability to prevent misinterpretations of higher numbers being more important, an issue with other encoding methods.
 The end result was 212 features, most of which were binary indicators of whether or not a certain category was found in the sample.
@@ -216,15 +217,13 @@ Based on \verb`K` number of the sample's nearest neighbours would it be classifi
 The reason it isn't necessarily a machine learning model is that second word, ``learning''.
 The algorithm simply takes in the data, compares against a map it has made, and returns a prediction.
 It doesn't learn from the initial dataset, but rather directly reads across it.
-
 Nonetheless, this model predicts a player's platform given the rest of a data sample.
 There are three possible results: PC, PlayStation 4, and Xbox One.
 After testing, the model was seen performing best when comparing against 15 neighbours using a uniform weight algorithm.
 
 The neural network, on the other hand, is a fully blown machine learning model.
 It makes use of training data it is given and learns and modifies weights based on whether or not its predictions were correct.
-
-The neural network used in this project involved four hidden layers with each layer decreasing by half.
+The neural network used in this project involved four hidden layers with each layer decreasing in size by half.
 It starts with the input data at 212 features and ends with seven probabilities, each corresponding to the model's confidence that the given inputs are from a certain rank.
 Each of the hidden layers made use of the ReLU activation function, a common and well-performing function.
 The model makes use of the Adam gradient descent optimiser and measures loss using mean square error.
@@ -245,9 +244,9 @@ As mentioned before, the KNN model predicted platform whereas the neural network
 The KNN model was set up to predict a player's platform of choice.
 Given all of information, the question was what platform is this player playing on?
 
-Training was done with sci-kit learn's \verb`KNeighborsClassifier` class.
+Training was done with scikit-learn's \verb`KNeighborsClassifier` class.
 It provided a pre-built solution to the KNN problem.
-All that was needed was to give it data, a number of neighbours to check, and a method of weighting each neighbour.
+All that was needed was to give it data, a number of neighbours to check, and a method of weighing each neighbour.
 After some simple trial and error, the best number of neighbours was determined to be 15 with a uniform weighing method.
 
 The result of this was a 95\% accuracy rate on the testing data after training.
@@ -266,14 +265,14 @@ The source of this is not clear by the model's results and could be a number of 
 \subsection{Neural Network}
 The neural network was set up to predict something different from the KNN model.
 The decision to do this was purely curiousity.
-As the objective of the course project was not necessarily to compare performances of the models, this curiousity-fueled adventured was deemed acceptable by the researcher.
+As the objective of the course project was not necessarily to compare performances of the models, this curiousity-fueled adventure was deemed acceptable by the researcher.
 
 This model was created to predict player ranks.
 The decision to go after player ranks was made due to it being a common things players wonder, often using a low rank to insult a player's performance and capabilities.
 The reason it was decided to be the thing tested by the neural network was due to it being a regression model and not a simple classifier.
 To mimick an average player, there can't be complete certainty, but rather a confidence level, a percentage in which the player believes this person is in a given rank.
 
-Following common advice, the network was designed in a decrease number of neurons way, with each layer cutting the number of neurons in half.
+Following common advice, the network was designed in a decrease-number-of-neurons way, with each layer cutting the number of neurons in half.
 Since the input features start at 212, the first hidden layer houses 106 neurons, and this number decreases until it reaches the seven output neurons, one for each rank.
 Also in line with common advice, the model makes use of the ReLU activation function for each neuron.
 This was simply found to be the most performant.
@@ -294,7 +293,7 @@ Instead, just a confusion matrix was plotted based on the testing data.
 The matrix shows 100\% accuracy by the model.
 This would appear to indicate, despite the shear number of possibilities within the game, each rank is clearly separable based on selections and performance.
 This is slightly surprising, once again given the shear number of possibilities within the game.
-Initial expectations were for some mistakes to be made around neighbouring ranks, e.g. Gold being confused for Silvers.
+Initial expectations were for some mistakes to be made around neighbouring ranks, e.g. Golds being confused for Silvers.
 This could easily be a limitation of the model and dataset; not much was actually given by the selected dataset about individual players, but rather groups of players.
 \begin{figure}[H]
 	\centering
