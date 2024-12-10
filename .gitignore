@@ -1,0 +1,15 @@
+# dataset files
+*.csv
+
+# notebook checkpoints
+.ipynb_checkpoints
+
+# tex files
+*.aux
+*.fdb_latexmk
+*.fls
+*.log
+*.out
+*.synctex.gz
+*.toc
+*.pdf
